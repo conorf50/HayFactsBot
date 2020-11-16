@@ -1,15 +1,12 @@
-use std::fs::File;
+use std::fs::*;
+extern crate json;
+use rand::prelude::Rng;
 fn main() -> Result<(), Box<dyn std::error::Error>> { 
-    let file = File::open("data/hayfacts.csv")?;
-    let mut vals: Vec<csv::StringRecord> = Vec::new();
-    let mut rdr = csv::Reader::from_reader(file);
-    for result in rdr.records() {
-        let record = result?;
-        //println!("{:?}", record);
-        vals.push(record);
-    }
-    
-    println!("Today's cool hay fact: {:?}", vals.to_vec()[0].as_slice());
-
+    let fstr = read_to_string("data/hayfacts.json")?; 
+    let parsed = json::parse(&fstr)?;
+    let facts_num = &parsed["facts"].len();
+    let mut rng = rand::thread_rng();
+    let rand: usize = rng.gen_range(0,facts_num); 
+    println!("{}", parsed["facts"][rand]);
     Ok(())
 }
