@@ -8,14 +8,19 @@
     https://github.com/serenity-rs/serenity/blob/current/examples/e01_basic_ping_bot/src/main.rs
 */
 use std::env;
-
+use json::*;
+use rand::prelude::*;
+use std::fs::*;
 use serenity::{
     async_trait,
     model::{channel::Message, gateway::Ready},
     prelude::*,
 };
 
-struct Handler;
+struct Handler{
+    fact_num: usize,
+    facts_array: json::JsonValue
+}
 
 const COMMAND: &str = "!hayfacts";
 
@@ -32,7 +37,13 @@ impl EventHandler for Handler {
             // authentication error, or lack of permissions to post in the
             // channel, so log to stdout when some error happens, with a
             // description of it.
-            if let Err(why) = msg.channel_id.say(&ctx.http, "Pong!").await {
+
+            // Generate a random number and index into the json array object
+            let mut rng = rand::rngs::OsRng;
+            let rand: usize = rng.gen_range(0, self.fact_num);
+
+            let response =  format!("{}", self.facts_array["facts"][rand]);
+            if let Err(why) = msg.channel_id.say(&ctx.http, response).await {
                 println!("Error sending message: {:?}", why);
             }
         }
@@ -57,12 +68,25 @@ fn main() {
         .block_on(async {
             // Configure the client with your Discord bot token in the environment.
             let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+            
+            // Read the local JSON file containing those juicy facts
+            // TODO, fix error handling
+            let fstr = read_to_string("data/hayfacts.json").unwrap();
+            let parsed = json::parse(&fstr).unwrap();
+
+            // Calculate how many facts we have so the rng won't generate values outside this
+            // range
+            let facts_array_len = parsed["facts"].len(); // access the 'facts' sub array
+
 
             // Create a new instance of the Client, logging in as a bot. This will
             // automatically prepend your bot token with "Bot ", which is a requirement
             // by Discord for bot users.
             let mut client = Client::builder(&token)
-                .event_handler(Handler)
+                .event_handler(Handler {
+                    facts_array: parsed,
+                    fact_num: facts_array_len
+                })
                 .await
                 .expect("Err creating client");
 
