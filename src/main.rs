@@ -8,7 +8,6 @@
     https://github.com/serenity-rs/serenity/blob/current/examples/e01_basic_ping_bot/src/main.rs
 */
 use std::env;
-use json::*;
 use rand::prelude::*;
 use std::fs::*;
 use serenity::{
