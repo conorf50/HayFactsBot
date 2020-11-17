@@ -60,15 +60,12 @@ impl EventHandler for Handler {
     }
 }
 
-fn main() {
-    tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .build()
-        .unwrap()
-        .block_on(async {
-            // Configure the client with your Discord bot token in the environment.
-            let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
-            
+#[tokio::main]
+async fn main() {
+    // Configure the client with your Discord bot token in the environment.
+    let token = env::var("DISCORD_SECRET_TOKEN")
+        .expect("Expected a token in the environment");
+
             // Read the local JSON file containing those juicy facts
             // TODO, fix error handling
             let fstr = read_to_string("data/hayfacts.json").unwrap();
@@ -97,15 +94,4 @@ fn main() {
             if let Err(why) = client.start().await {
                 println!("Client error: {:?}", why);
             }
-        })
 }
-
-// fn get_new_fact() -> Box<dyn std::result::Result<(), dyn std::error::Error>> {
-//     let fstr = read_to_string("data/hayfacts.json")?;
-//     let parsed = json::parse(&fstr)?;
-//     let facts_num = &parsed["facts"].len();
-//     let mut rng = rand::thread_rng();
-//     let rand: usize = rng.gen_range(0, facts_num);
-//     println!("{}", parsed["facts"][rand]);
-//     Ok(())
-// }

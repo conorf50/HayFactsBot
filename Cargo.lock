@@ -27,7 +27,7 @@ dependencies = [
  "futures-util",
  "log",
  "pin-project 1.0.1",
- "tokio 0.2.23",
+ "tokio",
  "tokio-rustls",
  "tungstenite",
  "webpki-roots 0.20.0",
@@ -317,7 +317,7 @@ dependencies = [
  "http",
  "indexmap",
  "slab",
- "tokio 0.2.23",
+ "tokio",
  "tokio-util",
  "tracing",
  "tracing-futures",
@@ -336,16 +336,7 @@ dependencies = [
  "json",
  "rand",
  "serenity",
- "tokio 0.3.3",
-]
-
-[[package]]
-name = "hermit-abi"
-version = "0.1.17"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5aca5565f760fb5b220e499d72710ed156fdb74e631659e99377d9ebfbd13ae8"
-dependencies = [
- "libc",
+ "tokio",
 ]
 
 [[package]]
@@ -399,7 +390,7 @@ dependencies = [
  "itoa",
  "pin-project 1.0.1",
  "socket2",
- "tokio 0.2.23",
+ "tokio",
  "tower-service",
  "tracing",
  "want",
@@ -416,7 +407,7 @@ dependencies = [
  "hyper",
  "log",
  "rustls",
- "tokio 0.2.23",
+ "tokio",
  "tokio-rustls",
  "webpki",
 ]
@@ -618,16 +609,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "num_cpus"
-version = "1.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05499f3756671c15885fee9034446956fff3f243d6077b91e5767df161f766b3"
-dependencies = [
- "hermit-abi",
- "libc",
-]
-
-[[package]]
 name = "once_cell"
 version = "1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -807,7 +788,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_urlencoded",
- "tokio 0.2.23",
+ "tokio",
  "tokio-rustls",
  "url",
  "wasm-bindgen",
@@ -921,7 +902,7 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
- "tokio 0.2.23",
+ "tokio",
  "tracing",
  "tracing-futures",
  "typemap_rev",
@@ -1021,18 +1002,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tokio"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e5ca08accbcb46f11fd8d2d1c6158c348b7888009a1f39260bcad66f6a454250"
-dependencies = [
- "autocfg",
- "num_cpus",
- "pin-project-lite",
- "slab",
-]
-
-[[package]]
 name = "tokio-macros"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1051,7 +1020,7 @@ checksum = "e12831b255bcfa39dc0436b01e19fea231a37db570686c06ee72c423479f889a"
 dependencies = [
  "futures-core",
  "rustls",
- "tokio 0.2.23",
+ "tokio",
  "webpki",
 ]
 
@@ -1066,7 +1035,7 @@ dependencies = [
  "futures-sink",
  "log",
  "pin-project-lite",
- "tokio 0.2.23",
+ "tokio",
 ]
 
 [[package]]
