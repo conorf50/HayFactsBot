@@ -12,8 +12,10 @@ use rand::prelude::*;
 use std::fs::*;
 use serenity::{
     async_trait,
-    model::{channel::Message, gateway::Ready},
+    model::{channel::Message, gateway::Ready, id::UserId},
     prelude::*,
+    utils::MessageBuilder,
+    model::user::*
 };
 
 struct Handler{
@@ -31,7 +33,18 @@ impl EventHandler for Handler {
     // Event handlers are dispatched through a threadpool, and so multiple
     // events can be dispatched simultaneously.
     async fn message(&self, ctx: Context, msg: Message) {
+        //println!("{:?}", msg);
         if msg.content == COMMAND {
+
+            let channel = match msg.channel_id.to_channel(&ctx).await {
+                Ok(channel) => channel,
+                Err(why) => {
+                    println!("Error getting channel: {:?}", why);
+                    return;
+                },
+            };
+            
+
             // Sending a message can fail, due to a network error, an
             // authentication error, or lack of permissions to post in the
             // channel, so log to stdout when some error happens, with a
@@ -41,10 +54,27 @@ impl EventHandler for Handler {
             let mut rng = rand::rngs::OsRng;
             let rand: usize = rng.gen_range(0, self.fact_num);
 
-            let response =  format!("{}", self.facts_array["facts"][rand]);
-            if let Err(why) = msg.channel_id.say(&ctx.http, response).await {
-                println!("Error sending message: {:?}", why);
-            }
+            // build response
+            let smart_bot_id: serenity::model::id::UserId= UserId(777199761966497842);
+        
+            
+            let response = MessageBuilder::new()
+            .mention(&smart_bot_id)
+            .push(" was mentioned")
+            .build();
+
+        if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
+            println!("Error sending message: {:?}", why);
+        }
+            // let response =  format!("{}", self.facts_array["facts"][rand]);
+           
+            // if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
+            //     println!("Error sending message: {:?}", why);
+            // }
+
+            // 777199761966497842
+
+
         }
     }
 
