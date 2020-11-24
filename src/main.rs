@@ -55,22 +55,22 @@ impl EventHandler for Handler {
             let rand: usize = rng.gen_range(0, self.fact_num);
 
             // build response
-            let smart_bot_id: serenity::model::id::UserId= UserId(777199761966497842);
+            // let smart_bot_id: serenity::model::id::UserId= UserId(777199761966497842);
         
             
-            let response = MessageBuilder::new()
-            .mention(&smart_bot_id)
-            .push(" was mentioned")
-            .build();
+            // let response = MessageBuilder::new()
+            // .mention(&smart_bot_id)
+            // .push("message")
+            // .build();
 
-        if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
-            println!("Error sending message: {:?}", why);
-        }
-            // let response =  format!("{}", self.facts_array["facts"][rand]);
+        // if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
+        //     println!("Error sending message: {:?}", why);
+        // }
+            let response =  format!("{}", self.facts_array["facts"][rand]);
            
-            // if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
-            //     println!("Error sending message: {:?}", why);
-            // }
+            if let Err(why) = msg.channel_id.say(&ctx.http, &response).await {
+                println!("Error sending message: {:?}", why);
+            }
 
             // 777199761966497842
 
