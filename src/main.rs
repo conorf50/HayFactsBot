@@ -23,7 +23,7 @@ struct Handler{
     facts_array: json::JsonValue
 }
 
-const COMMAND: &str = "!hayfacts";
+const COMMAND: &str = "/hayfacts";
 
 #[async_trait]
 impl EventHandler for Handler {
