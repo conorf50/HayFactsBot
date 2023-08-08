@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 json = "0.12.4"
-rand = "0.7.3"
-serenity = { version = "0.9.1", default-features = false, features = ["client", "gateway", "rustls_backend", "model"] }
-tokio = { version = "0.2", features = ["macros"] }
+rand = "0.8.4"
+serenity = {git = "https://github.com/serenity-rs/serenity", rev = "38b11da9bc806e342351e32e81bcf4eee69ff1c7", default-features = false, features = ["client", "gateway", "rustls_backend", "model", "unstable_discord_api","collector" ] }
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+dotenv = { version = "0.15.0" }
